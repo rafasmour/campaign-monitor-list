@@ -1,14 +1,15 @@
-import express from 'express';
-import dotenv from 'dotenv';
-
-dotenv.config({
-    path: '../.env'
-})
-
+import env from './vars/env.js';
+import app from './app.js';
+import { apiTest } from "./connections/campmonitor.connection.js";
 const PORT = process.env.BACKEND_PORT || 3000;
-const app = express();
-app.use(express.urlencoded({extended: true}));
 
-app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
+apiTest
+    .then(() => {
+        console.log("Connected to Camp Monitor API");
+        app.listen(PORT, () => {
+            console.log(`Server is running on port ${PORT}`);
+        })
+    })
+    .catch((err) => {
+        console.error("Error connecting to Camp Monitor API", err);
+    })
