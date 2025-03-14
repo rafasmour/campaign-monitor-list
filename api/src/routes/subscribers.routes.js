@@ -16,7 +16,7 @@ router.route('/').get(async (req, res)=> {
         const data = apiRes.data;
         const subscribers = data.Results;
         console.log(subscribers);
-        res.json(JSON.stringify(subscribers));
+        res.json(subscribers);
     } catch (error) {
         console.error(error);
         res.json(error.message);
