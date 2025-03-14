@@ -1,9 +1,14 @@
-export default function SubscriberItem({ email, name, deleteSubscriber}) {
+import React from 'react';
+import { useSubs } from "../Context/SubscribersContext.jsx";
+import {FaTrashCan} from "react-icons/fa6";
+
+export default function SubscriberItem({ email, name}) {
+    const { deleteSub } = useSubs();
     return (
-        <section className={"flex flex-row justify-between items-center p-2 w-10 h-10"}>
-            <span>{{email}}</span>
-            <name>{{name}}</name>
-            <button onClick={() => deleteSubscriber(email)}>Del</button>
+        <section className="grid grid-cols-12 min-w-screen">
+            <span className={"col-span-6 text-sm truncate p-1"}>{email}</span>
+            <name className={"col-span-5 text-sm truncate p-1"}>{name}</name>
+            <button className={"col-span-1 text-sm"} onClick={() => deleteSub(email)}><FaTrashCan /></button>
         </section>
     )
 }
