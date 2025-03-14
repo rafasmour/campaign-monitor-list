@@ -15,6 +15,7 @@
 !app/package-lock.json
 
 # root files
+!.env.sample
 !.gitignore
 !LICENSE
 !README.md
