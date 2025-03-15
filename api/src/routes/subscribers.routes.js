@@ -1,7 +1,7 @@
 // routes for managing subscribers
-import { Router } from 'express';
+import {Router} from 'express';
 import axios from "axios";
-import { apiURL, axiosConfig } from "../connections/campmonitor.connection.js";
+import {apiURL, axiosConfig} from "../connections/campmonitor.connection.js";
 import env from "../vars/env.js";
 import validator from 'email-validator';
 
@@ -15,12 +15,10 @@ router.route('/').get(async (req, res)=> {
         );
         console.log('hey')
         const apiRes = await apiReq;
-        console.log(apiRes.data.token)
         const data = apiRes.data;
         const subscribers = data.Results;
         res.json(subscribers);
     } catch (error) {
-        console.error(error);
         res.json(error.message);
     }
 })
@@ -38,17 +36,15 @@ router.route('/import').post(async (req, res)=> {
             if(!isEmailValid){
                 throw new Error("Emailaddress is not valid");
             }
-            const subsciberNode = {
+            return {
                 EmailAddress: sub.EmailAddress,
                 Name: sub.Name,
                 MobileNumber: "",
                 Resubscribe: true,
                 RestartSubscriptionBasedAutoresponders: true,
-                ConsentToTrack:"Yes",
+                ConsentToTrack: "Yes",
                 ConsentToSendSms: "Yes"
-            }
-
-            return subsciberNode;
+            };
         })
         console.log(newSubs);
 
@@ -58,7 +54,6 @@ router.route('/import').post(async (req, res)=> {
             QueueSubscriptionBasedAutoResponders: false,
             RestartSubscriptionBasedAutoresponders: true
         }
-        console.log(reqBody);
         const apiReq = axios.post(
             apiURL + `/subscribers/${listID}/import.json`,
             reqBody,
@@ -67,7 +62,6 @@ router.route('/import').post(async (req, res)=> {
         const apiRes = await apiReq;
         res.json(apiRes.data);
     } catch (error) {
-        console.log(error);
         res.json(error.message);
     }
 
