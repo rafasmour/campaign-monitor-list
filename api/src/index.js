@@ -1,7 +1,7 @@
 import env from './vars/env.js';
 import app from './app.js';
 import { apiTest } from "./connections/campmonitor.connection.js";
-const PORT = 3000;
+const PORT = 80;
 
 apiTest
     .then(() => {
